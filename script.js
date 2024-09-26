@@ -1,15 +1,13 @@
-var raport_bg = document.getElementById("raport_bg");
-raport_bg.style.display = 'none';
-const raportButton = document.getElementById("raportButton");
-raportButton.addEventListener("click", showmoney);
+var result_bg = document.getElementById("result_bg");
+result_bg.style.display = 'none';
 
 function showmoney(){
-    raport_bg.style.display = 'inline';
+    result_bg.style.display = 'inline';
 
 }
 function hidemoney(){
     
-raport_bg.style.display = 'none';
+result_bg.style.display = 'none';
 }
 function prevent(event){
     event.stopPropagation();
