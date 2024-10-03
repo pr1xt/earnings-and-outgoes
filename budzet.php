@@ -1,21 +1,22 @@
 <?php
-    ob_start();
-    $conn = mysqli_connect("localhost","root","","budzet");
     $cookie_name = "cel";
     if(!isset($_COOKIE[$cookie_name])) {
         setcookie("cel", 10000, time() + (86400 * 30));
     }
+    ob_start();
+    $conn = mysqli_connect("localhost","root","","budzet");
+    
     if (!$conn->set_charset("utf8")) {
         echo "<em class='errorMessage'>Nie można połączyć z serwerem i/lub bazą danych</em>";
     }
 
-    if (isset($_POST["earningSent"])) {
+    if (isset($_POST["earningSent"]) && $_POST["earningAmount"] > 0) {
         $sql = ("INSERT INTO earnings(amount, comm, data_trans) VALUES ('" . $_POST["earningAmount"] . "', '" . $_POST["earningComm"] . "', '" . $_POST["earningDate"] . "')");
         $query = @mysqli_query($conn, $sql);
         if (!$query) {
             echo "<em class='errorMessage'>Nie udało się dodać przychodów</em>";
         }
-    } else if (isset($_POST["outgoSent"])) {
+    } else if (isset($_POST["outgoSent"]) && $_POST["outgoAmount"] > 0) {
         $categoryId = 7;
         $sql = "";
         if (isset($_POST["outgoCategory"]) && $_POST["outgoCategory"] != NULL) {
@@ -197,6 +198,11 @@
                     </div>
                     <p id="categoriesSum">:</p>
                 </div>
+
+                <div id="tip">
+                    <img src="porada.jpg" alt="porada">
+                </div>
+
                 <div id="cel_block">
                     <form method="get">
                         <label>Podaj nowy cel: </label>
