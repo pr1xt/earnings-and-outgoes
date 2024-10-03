@@ -1,5 +1,10 @@
 <?php
+    ob_start();
     $conn = mysqli_connect("localhost","root","","budzet");
+    $cookie_name = "cel";
+    if(!isset($_COOKIE[$cookie_name])) {
+        setcookie("cel", 10000, time() + (86400 * 30));
+    }
     if (!$conn->set_charset("utf8")) {
         echo "<em class='errorMessage'>Nie można połączyć z serwerem i/lub bazą danych</em>";
     }
@@ -192,6 +197,21 @@
                     </div>
                     <p id="categoriesSum">:</p>
                 </div>
+                <div id="cel_block">
+                    <form method="get">
+                        <label>Podaj nowy cel: </label>
+                        <input type="number" min="1" name="cook">
+                        <input type="submit" name="cel_cook"value="Podtwierdź">
+                    </form>
+                    <?php
+                        if(isset($_GET["cel_cook"])) {
+                            setcookie("cel", $_GET["cook"], time() + (86400 * 30));
+                        }
+                        $diff = $earnings - $outgoes;
+                        echo "<p>Cel oszczędnościowy: $diff/".$_COOKIE["cel"]."<p>";
+
+                    ?>
+                </div>
             </div>
         </div>
     </footer>
@@ -201,5 +221,6 @@
 </html>
 
 <?php
+    ob_end_flush();
     mysqli_close($conn);
 ?>

@@ -7,12 +7,12 @@ body {
 header {
     text-align: center;
     border-bottom: 0.125rem solid #161616;
-    background-color: #fde293;
+
+    background: #fde293;
     padding: 1rem;
 }
-
-header > h1 {
-    margin: 0;
+header > h1{
+    margin: 0px;
 }
 
 #main {
@@ -129,6 +129,7 @@ footer {
     position: fixed;
     width: 85%;
     height: 85%;
+
     background-color: #ffd968;
     top: 50%;
     left: 50%;
@@ -184,6 +185,7 @@ td, th {
     width: 25%;
 }
 
+
 #filterCategories {
     display: flex;
     justify-content: center;
@@ -195,4 +197,17 @@ td, th {
 
 #filterCategories select {
     font-size: 1rem;
+}
+#cel_block{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin: 5px;
+    width: 40%;
+}
+#cel_block > p{
+    font-size: 150%;
+}
+#cel_block > form > input{
+    width: 8vw;
 }
