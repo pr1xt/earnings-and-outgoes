@@ -1,6 +1,6 @@
 <?php
     $conn = mysqli_connect("localhost","root","","budzet");
-    if (!$conn) {
+    if (!$conn->set_charset("utf8")) {
         echo "<em class='errorMessage'>Nie można połączyć z serwerem i/lub bazą danych</em>";
     }
 
@@ -53,7 +53,7 @@
     </header>
     <div id="main">
         <div id="left">
-            <form action="budzet.php" method="POST">
+            <form action="budzet.php" method="POST" id="earningsForm">
                 <h1>PRZYCHODY</h1>
                 <label for="earningAmount">Ilość:</label>
                 <input type="number" id="earningAmount" name="earningAmount" required>
@@ -107,7 +107,8 @@
             <div id="result_block" onclick="prevent(event)">
                 <div id="res_left_right">
                     <div class="left_right" id="res_l">
-                        <h2>przychody</h2>
+                        <form action=""></form>
+                        <h2>Przychody</h2>
                         <div class="scrollable_table">
                             <table>
                                 <tr>
@@ -116,7 +117,7 @@
                                     <th>Komentarz</th>
                                 </tr>
                                 <?php
-                                    $sql="select amount,comm, data_trans from earnings";
+                                    $sql="SELECT amount,comm, data_trans FROM earnings";
                                     $result = mysqli_query($conn, $sql);
                                     while ($row = mysqli_fetch_array($result)){
                                         echo"<tr><td>".$row["amount"]."</td><td>".$row["data_trans"]."</td><td>".$row["comm"]."</td></tr>";
@@ -125,9 +126,18 @@
                                 ?>
                             </table>
                         </div>
+                        <?php
+                        $sql="SELECT SUM(amount) FROM earnings";
+                        $result = mysqli_query($conn, $sql);
+                        $earnings = 0;
+                        while ($row=mysqli_fetch_array($result)) {
+                            $earnings = $row[0];
+                        }
+                            echo "<p>Łącznie: $earnings</p>";
+                        ?>
                     </div>
                     <div class="left_right" id="res_r">
-                        <h2>wydatki</h2>
+                        <h2>Wydatki</h2>
                         <div class="scrollable_table">
                             <table>
                                 <tr><th>Ilość</th><th>Data</th><th>Kategoria</th><th>Komentarz</th></tr>
@@ -141,11 +151,37 @@
                                 ?>
                             </table>
                         </div>
+                        <?php
+                            $sql="SELECT SUM(amount) FROM outgo";
+                            $result = mysqli_query($conn, $sql);
+                            $outgoes = 0;
+                            while ($row=mysqli_fetch_array($result)) {
+                                $outgoes = $row[0];
+                            }
+                                echo "<p>Łącznie: $outgoes</p>";
+                        ?>
                     </div>
                 </div>
-                <?php
                 
-                ?>
+                <div id="filterCategories">
+                    <label for="filterInput">Suma dla kategorii:</label>
+                    <select id="filterInput">
+                        <?php
+                            $query = mysqli_query($conn, "SELECT * FROM categories WHERE id != 7;");
+                            if (!$query) {
+                                echo "<em class='errorMessage'>Nie udało się wykonać zapytania</em>";
+                            } else {
+                                while ($row = mysqli_fetch_array($query)) {
+                                    echo '<option value="' . $row[1] . '">' . $row[1] . "</option>";
+                                }
+                            }
+                        ?>
+                    </select>
+                    <?php
+                    // https://steemit.com/utopian-io/@simpleawesome/how-to-create-searching-without-refresh-page-with-jquery-ajax
+                        
+                    ?>
+                </div>
             </div>
         </div>
     </footer>
