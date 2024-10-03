@@ -7,8 +7,9 @@ body {
 header {
     text-align: center;
     border-bottom: 0.125rem solid #161616;
+
     background: #fde293;
-    padding: 2vh;
+    padding: 1rem;
 }
 header > h1{
     margin: 0px;
@@ -128,7 +129,8 @@ footer {
     position: fixed;
     width: 85%;
     height: 85%;
-    background: #ffd968;
+
+    background-color: #ffd968;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -176,12 +178,26 @@ table{
     overflow: auto;
     overflow:hidden; 
     overflow-y:scroll;
+    border-inline: 0;
 }
 
 td, th {
     width: 25%;
 }
 
+
+#filterCategories {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 0 auto;
+    font-size: 1.5rem;
+}
+
+#filterCategories select {
+    font-size: 1rem;
+}
 #cel_block{
     position: absolute;
     bottom: 0px;
@@ -195,4 +211,3 @@ td, th {
 #cel_block > form > input{
     width: 8vw;
 }
-
