@@ -7,6 +7,11 @@ body {
 header {
     text-align: center;
     border-bottom: 0.125rem solid #161616;
+    background: #fde293;
+    padding: 2vh;
+}
+header > h1{
+    margin: 0px;
 }
 
 #main {
@@ -123,7 +128,7 @@ footer {
     position: fixed;
     width: 85%;
     height: 85%;
-    background-color: #c3f5b4;
+    background: #ffd968;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -175,5 +180,19 @@ table{
 
 td, th {
     width: 25%;
+}
+
+#cel_block{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    margin: 5px;
+    width: 40%;
+}
+#cel_block > p{
+    font-size: 150%;
+}
+#cel_block > form > input{
+    width: 8vw;
 }
 
