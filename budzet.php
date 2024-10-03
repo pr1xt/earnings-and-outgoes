@@ -46,6 +46,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Zarządzanie budżetem</title>
+    <script>
+        const categoriesAndSums = [
+        <?php
+            $sql = "SELECT categories.name, SUM(amount) FROM outgo INNER JOIN categories ON category_id=categories.id GROUP BY category_id";
+            $query = mysqli_query($conn, $sql);
+            while ($row=mysqli_fetch_row($query)) {
+                echo '"' . $row[0] . '", ' . $row[1] . ","; 
+            }
+        ?>
+        ];
+    </script>
 </head>
 <body>
     <header>
@@ -164,23 +175,22 @@
                 </div>
                 
                 <div id="filterCategories">
-                    <label for="filterInput">Suma dla kategorii:</label>
-                    <select id="filterInput">
-                        <?php
-                            $query = mysqli_query($conn, "SELECT * FROM categories WHERE id != 7;");
-                            if (!$query) {
-                                echo "<em class='errorMessage'>Nie udało się wykonać zapytania</em>";
-                            } else {
-                                while ($row = mysqli_fetch_array($query)) {
-                                    echo '<option value="' . $row[1] . '">' . $row[1] . "</option>";
+                    <div>
+                        <label for="filterInput">Suma wydatków dla kategorii</label>
+                        <select id="filterInput">
+                            <?php
+                                $query = mysqli_query($conn, "SELECT * FROM categories");
+                                if (!$query) {
+                                    echo "<em class='errorMessage'>Nie udało się wykonać zapytania</em>";
+                                } else {
+                                    while ($row = mysqli_fetch_array($query)) {
+                                        echo '<option value="' . $row[1] . '">' . $row[1] . "</option>";
+                                    }
                                 }
-                            }
-                        ?>
-                    </select>
-                    <?php
-                    // https://steemit.com/utopian-io/@simpleawesome/how-to-create-searching-without-refresh-page-with-jquery-ajax
-                        
-                    ?>
+                            ?>
+                        </select>
+                    </div>
+                    <p id="categoriesSum">:</p>
                 </div>
             </div>
         </div>
